@@ -1,28 +1,32 @@
-const loadPhone = async (searchText) => {
+const loadPhone = async (searchText, isShowAll) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   );
   const data = await res.json();
   const phones = data.data;
   //   console.log(phones);
-  displayPhones(phones);
+  displayPhones(phones, isShowAll);
 };
 
-const displayPhones = (phones) => {
+const displayPhones = (phones, isShowAll) => {
   //   console.log(phones);
   //1. Get the element by id, cz ekhne boshabo
   const phoneContainer = document.getElementById("phones-container");
   // Clear phone container card before adding new card
   phoneContainer.textContent = "";
-  // Display show all button if there are more than 10 phones
+  // Display show all button if there are more than 12 phones
   const showAllContainer = document.getElementById("show-all-container");
-  if (phones.length > 10) {
+  if (phones.length > 12 && !isShowAll) {
     showAllContainer.classList.remove("hidden");
   } else {
     showAllContainer.classList.add("hidden");
   }
-  // Display only 5 phones
-  phones = phones.slice(0, 10);
+  // Display only 12 phones if not show all button clicked
+  if (!isShowAll) {
+    phones = phones.slice(0, 12);
+  }
+
+  console.log(isShowAll);
   phones.forEach((phone) => {
     // console.log(phone);
     // 2. Create a div
@@ -47,13 +51,13 @@ const displayPhones = (phones) => {
 };
 
 // Handle Search Button
-const handleSearch = () => {
+const handleSearch = (isShowAll) => {
   toggleLoadingSpinner(true); //click kora matro loading spinner show korbe
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   console.log(searchText);
 
-  loadPhone(searchText); //function ke call kore or mddhe search text ta diye dlm
+  loadPhone(searchText, isShowAll); //function ke call kore or mddhe search text ta diye dlm
 };
 
 // Loading Spinner
@@ -65,6 +69,11 @@ const toggleLoadingSpinner = (isLoading) => {
   } else {
     loadingSpinner.classList.add("hidden");
   }
+};
+
+// Handle Show All-> we shouldn't do it in that way still
+const handleShowAll = () => {
+  handleSearch(true);
 };
 
 // loadPhone();
