@@ -38,8 +38,8 @@ const displayPhones = (phones, isShowAll) => {
     <div class="card-body">
         <h2 class="card-title">${phone.phone_name}</h2>
         <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div class="card-actions justify-end">
-            <button class="btn btn-primary">Buy Now</button>
+        <div class="card-actions justify-center">
+            <button onclick="handleShowDetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
         </div>
     </div>
     `;
@@ -48,6 +48,38 @@ const displayPhones = (phones, isShowAll) => {
   });
   // Hide loading spinner
   toggleLoadingSpinner(false);
+};
+
+// Handle Show Details
+const handleShowDetails = async (id) => {
+  // console.log("Clickedddd", id);
+  // Load Single Phone Data
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/phone/${id}`
+  );
+  const data = await res.json();
+  const phone = data.data;
+  console.log(phone);
+
+  showPhoneDetails(phone);
+};
+// Show phone Details
+const showPhoneDetails = (phone) => {
+  console.log(phone);
+
+  const phoneName = document.getElementById("show-detail-phone-name");
+  phoneName.innerText = phone.name;
+
+  const showDetailsContainer = document.getElementById(
+    "show-details-container"
+  );
+  showDetailsContainer.innerHTML = `
+    <img src="${phone.image}" alt="">
+    <p><span>Storage: ${phone.mainFeatures?.storage}</span></p>
+    <p><span>GPS: ${phone.others?.GPS}</span></p>
+  `;
+  // Show the modal
+  show_details_modal.showModal();
 };
 
 // Handle Search Button
