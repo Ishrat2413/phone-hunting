@@ -16,13 +16,20 @@
         <h2 class="text-5xl text-center">Hunting Phone</h2>
     </header>
     <main class="container mx-auto mt-8">
-
+        <!-- Search Filed -->
         <section class="bg-gray-300 p-2 m-3">
             <input id="search-field" type="text" placeholder="Search..." class="input input-bordered w-full max-w-xs" />
             <button onclick="handleSearch()" class="btn btn-accent">Search</button>
         </section>
+        
+
         <!-- Search Result -->
         <section>
+            <!-- Spinner Or Loader -->
+            <div class="hidden text-center my-40" id="loading-spinner">
+                <span class="loading loading-spinner loading-lg"></span>
+            </div>
+            
             <div id="phones-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             </div>
             <!-- Show All Button -->

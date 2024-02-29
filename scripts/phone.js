@@ -42,15 +42,29 @@ const displayPhones = (phones) => {
     //4. Append Child
     phoneContainer.appendChild(phoneCard);
   });
+  // Hide loading spinner
+  toggleLoadingSpinner(false);
 };
 
 // Handle Search Button
 const handleSearch = () => {
-  //   console.log("Search Please");
+  toggleLoadingSpinner(true); //click kora matro loading spinner show korbe
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   console.log(searchText);
 
   loadPhone(searchText); //function ke call kore or mddhe search text ta diye dlm
 };
+
+// Loading Spinner
+const toggleLoadingSpinner = (isLoading) => {
+  const loadingSpinner = document.getElementById("loading-spinner");
+  // Show loading spinner
+  if (isLoading) {
+    loadingSpinner.classList.remove("hidden");
+  } else {
+    loadingSpinner.classList.add("hidden");
+  }
+};
+
 // loadPhone();
