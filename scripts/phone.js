@@ -1,6 +1,6 @@
 const loadPhone = async (searchText) => {
   const res = await fetch(
-    "https://openapi.programming-hero.com/api/phones?search=${searchText}"
+    `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   );
   const data = await res.json();
   const phones = data.data;
@@ -12,8 +12,17 @@ const displayPhones = (phones) => {
   //   console.log(phones);
   //1. Get the element by id, cz ekhne boshabo
   const phoneContainer = document.getElementById("phones-container");
-  // Ekta ekta kore phones show korbe
-
+  // Clear phone container card before adding new card
+  phoneContainer.textContent = "";
+  // Display show all button if there are more than 10 phones
+  const showAllContainer = document.getElementById("show-all-container");
+  if (phones.length > 10) {
+    showAllContainer.classList.remove("hidden");
+  } else {
+    showAllContainer.classList.add("hidden");
+  }
+  // Display only 5 phones
+  phones = phones.slice(0, 10);
   phones.forEach((phone) => {
     // console.log(phone);
     // 2. Create a div
